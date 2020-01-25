@@ -1,93 +1,100 @@
+const materials = ['water', 'gold', 'iron'];
+const list = {
+    water: {
+        heatL: 4.2,
+        heatS: 1.8,
+        heatSt: 2,
+        cryst: 330,
+        eva: 2.3,
+        crystT: 0,
+        evaT: 100,
+    },
+    iron: {
+        heatL: 0.444,
+        heatS: 0.444,
+        heatSt: 0.444,
+        cryst: 277,
+        eva: 6300,
+        crystT: 1538,
+        evaT: 3050,
+    },
+    gold: {
+        heatL: 0.129,
+        heatS: 0.129,
+        heatSt: 0.129,
+        cryst: 67,
+        eva: 66,
+        crystT: 1064,
+        evaT: 2807,
+    }
+}
+
+// 1 добавить конфиг с объектом и массивом 
 function heatCalculatorOne(initialTemp) {
-    let oldTemperature = initialTemp;
+    let oldTemp = initialTemp;
 
     return function (deltaTemp) {
-        let newTemperature = oldTemperature + deltaTemp;
+        let newTemp = oldTemp + deltaTemp;
 
-        if (newTemperature > -273) {
+        if (newTemp > -273) {
             let heat = 0;
 
-            if (oldTemperature > 0 && newTemperature < 0) {
-                heat = -4.2 * oldTemperature - 330 + 1.8 * newTemperature;
-            } else if (oldTemperature < 0 && newTemperature > 0) {
-                heat = -1.8 * oldTemperature + 330 + 4.2 * newTemperature;
-            } else if (oldTemperature > 100 && newTemperature < 100) {
-                heat = -2 * (oldTemperature - 100) - 2.3 + 4.2 * (newTemperature - 100);
-            } else if (oldTemperature < 100 && newTemperature > 100) {
-                heat = -4.2 * (oldTemperature - 100) + 2.3 + 4.2 * (newTemperature - 100);
+            if (oldTemp > 0 && newTemp < 0) {
+                heat = -4.2 * oldTemp - 330 + 1.8 * newTemp;
+            } else if (oldTemp < 0 && newTemp > 0) {
+                heat = -1.8 * oldTemp + 330 + 4.2 * newTemp;
+            } else if (oldTemp > 100 && newTemp < 100) {
+                heat = -2 * (oldTemp - 100) - 2.3 + 4.2 * (newTemp - 100);
+            } else if (oldTemp < 100 && newTemp > 100) {
+                heat = -4.2 * (oldTemp - 100) + 2.3 + 4.2 * (newTemp - 100);
             } else {
                 heat = 4.2 * deltaTemp;
             }
-            console.log({ oldTemperature, newTemperature, heat });
-            oldTemperature = newTemperature;
+            console.log({ oldTemp, newTemp, heat });
+            oldTemp = newTemp;
         } else {
             console.log('Temperature limit reached');
         }
     }
 }
 
+// 2
 function heatCalculatorTwo(initialTemp, material) {
-    let oldTemperature = initialTemp;
+    let oldTemp = initialTemp;
 
     return function (deltaTemp) {
-        let newTemperature = oldTemperature + deltaTemp;
+        const isMaterial = materials.includes(material);
+        if (isMaterial) {
+            let newTemp = oldTemp + deltaTemp;
 
-        if (newTemperature > -273) {
-            let heat = 0;
-
-            switch (material) {
-                case 'water':
-                    if (oldTemperature > 0 && newTemperature < 0) {
-                        heat = -4.2 * oldTemperature - 330 + 1.8 * newTemperature;
-                    } else if (oldTemperature < 0 && newTemperature > 0) {
-                        heat = -1.8 * oldTemperature + 330 + 4.2 * newTemperature;
-                    } else if (oldTemperature > 100 && newTemperature < 100) {
-                        heat = -2 * (oldTemperature - 100) - 2.3 + 4.2 * (newTemperature - 100);
-                    } else if (oldTemperature < 100 && newTemperature > 100) {
-                        heat = -4.2 * (oldTemperature - 100) + 2.3 + 4.2 * (newTemperature - 100);
-                    } else {
-                        heat = 4.2 * deltaTemp;
-                    }
-                    break;
-
-                case 'gold':
-                    if (oldTemperature > 1064 && newTemperature < 1064) {
-                        heat = -0.129 * (oldTemperature - 1064) - 67 + 0.129 * (newTemperature - 1064);
-                    } else if (oldTemperature < 1064 && newTemperature > 1064) {
-                        heat = -0.129 * (oldTemperature - 1064) + 67 + 0.129 * (newTemperature - 1064);
-                    } else if (oldTemperature > 2807 && newTemperature < 2807) {
-                        heat = -0.129 * (oldTemperature - 2807) - 66 + 0.129 * (newTemperature - 2807);
-                    } else if (oldTemperature < 2807 && newTemperature > 2807) {
-                        heat = -0.129 * (oldTemperature - 2807) + 66 + 0.129 * (newTemperature - 2807);
-                    } else {
-                        heat = 0.129 * deltaTemp;
-                    }
-                    break;
-
-                case 'iron':
-                    if (oldTemperature > 1538 && newTemperature < 1538) {
-                        heat = -0.444 * (oldTemperature - 1538) - 277 + 0.444 * (newTemperature - 1538);
-                    } else if (oldTemperature < 1538 && newTemperature > 1538) {
-                        heat = -0.444 * (oldTemperature - 1538) + 277 + 0.444 * (newTemperature - 1538);
-                    } else if (oldTemperature > 3050 && newTemperature < 3050) {
-                        heat = -0.444 * (oldTemperature - 3050) - 6300 + 0.444 * (newTemperature - 3050);
-                    } else if (oldTemperature < 3050 && newTemperature > 3050) {
-                        heat = -0.444 * (oldTemperature - 3050) + 6300 + 0.444 * (newTemperature - 3050);
-                    } else {
-                        heat = 0.444 * deltaTemp;
-                    }
-                    break;
-
-                default:
-                    console.log('Unknown material');
-                    return
+            if (newTemp > -273) {
+                calculatorForHeat(oldTemp, newTemp, deltaTemp, material)
+                oldTemp = newTemp;
+            } else {
+                console.log('Temperature limit reached');
             }
-            console.log({ material, state: { oldTemperature, newTemperature, heat } });
-            oldTemperature = newTemperature;
         } else {
-            console.log('Temperature limit reached');
+            console.log('Unknown material')
         }
+        
     }
+}
+
+function calculatorForHeat(oldTemp, newTemp, deltaTemp, material) {
+    let heat = 0;
+
+    if (oldTemp > list[material].crystT && newTemp < list[material].crystT) {
+        heat = -list[material].heatL * (oldTemp - list[material].crystT) - list[material].cryst + list[material].heatS * (newTemp - list[material].crystT)
+    } else if (oldTemp < list[material].crystT && newTemp > list[material].crystT) {
+        heat = -list[material].heatS * (oldTemp - list[material].crystT) + list[material].cryst + list[material].heatL * (newTemp - list[material].crystT)
+    } else if (oldTemp > list[material].evaT && newTemp < list[material].evaT) {
+        heat = -list[material].heatSt * (oldTemp - list[material].evaT) - list[material].eva + list[material].heatL * (newTemp - list[material].evaT)
+    } else if (oldTemp < list[material].evaT && newTemp > list[material].evaT) {
+        heat = -list[material].heatL * (oldTemp - list[material].evaT) + list[material].eva + list[material].heatSt * (newTemp - list[material].evaT)
+    } else {
+        heat = list[material].heatL * deltaTemp;
+    }
+    console.log({ oldTemp, newTemp, heat });
 }
 
 const calculator = heatCalculatorOne(0);
