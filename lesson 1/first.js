@@ -1,26 +1,16 @@
 const source = [{ name: 'Pavel', age: 33 }, {name: 'Anton', age: 24}, {name: 'Igor', age: 33}];
-const sourceError = [18, null];
+const sourceError = [18, null, [], '', 'fdfdfsff'];
 
 // 1
 function getSlicedValuesOne(source, param = 'age') {
-    const result = [];
-    source.forEach(element => {
-        if (element && element.hasOwnProperty(param) && element[param]) {
-            result.push(element[param])
-        }
-    });
-    return result
-}
-
-function getSlicedValuesTwo(source, param = 'age') {
     return source
         .filter(element => element && element.hasOwnProperty(param) && element[param])
         .map(element => element[param])
 }
 
 console.log(getSlicedValuesOne(source, 'age'));
-console.log(getSlicedValuesTwo(source, 'lastName'));
-console.log(getSlicedValuesTwo(sourceError, 'age'));
+console.log(getSlicedValuesOne(source, 'lastName'));
+console.log(getSlicedValuesOne(sourceError, 'age'));
 
 // 2
 function getSlicedValuesThree(source, param) {
