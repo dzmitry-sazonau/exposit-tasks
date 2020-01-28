@@ -1,9 +1,9 @@
 import { loadCapitalByCountryId } from './loadCapitalByCountryId.js';
 import { loadCountry } from './loadCountry.js';
 
-function getCapitalByCountry({countryId, countryName}) {
-    return loadCountry({id: countryId, name: countryName})
-        .then(country => loadCapitalByCountryId(country.id))
+async function getCapitalByCountry({countryId, countryName}) {
+    const country = await loadCountry({id: countryId, name: countryName})
+    return await loadCapitalByCountryId(country.id)
 }
 
 getCapitalByCountry({countryId: 5, countryName: ''})
