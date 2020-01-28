@@ -19,8 +19,11 @@ const countries = [
     {
         id: 5,
         country: 'Canada'
-    }
-];
+    },
+    {
+        id: 6,
+        country: 'Canada'
+    }];
 const capitals = [
     {
         id: 1,
@@ -51,9 +54,9 @@ const capitals = [
 
 function loadCountryById(id) {
     return new Promise(((resolve, reject) => {
-        const country = countries.find(element => element.id === id);
+        const country = countries.find(element => !!element.id && element.id === id);
 
-        if (country.length != 0) {
+        if (country) {
             setTimeout(resolve(country), 3000);
         } else {
             reject('Country not found');
@@ -67,9 +70,9 @@ function loadCountryById(id) {
 
 function loadCountry({id, name}) {
     return new Promise(((resolve, reject) => {
-        const country = (id || name) && countries.find(element => element.id === id || element.name === name);
+        const country = (id || name) && countries.find(element => (!!element.id && element.id === id) || (!!element.name && element.name === name));
 
-        if (country && Object.keys(country).length != 0) {
+        if (country) {
             setTimeout(resolve(country), 3000);
         } else {
             reject('Country not found');
@@ -79,9 +82,9 @@ function loadCountry({id, name}) {
 
 function loadCapitalByCountryId(countryId) {
     return new Promise(((resolve, reject) => {
-        const capital = countryId && capitals.find(element => element.countryId === countryId)
+        const capital = countryId && capitals.find(element => !!element.id && element.countryId === countryId)
 
-        if (capital && Object.keys(capital).length != 0) {
+        if (capital) {
             resolve(capital.name)
         } else {
             reject('Capital not found');
