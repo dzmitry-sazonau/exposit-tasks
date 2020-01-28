@@ -56,14 +56,13 @@ function loadCountryById(id) {
     return new Promise(((resolve, reject) => {
         const country = countries.find(element => !!element.id && element.id === id);
 
+        if (Math.random() < probability) {
+            reject('Could not retrieve the data');
+        }
         if (country) {
             setTimeout(resolve(country), 3000);
         } else {
             reject('Country not found');
-        }
-
-        if (Math.random() < probability) {
-            reject('Could not retrieve the data');
         }
     }));
 }
