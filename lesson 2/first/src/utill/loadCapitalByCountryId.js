@@ -1,4 +1,4 @@
-import { capitals } from '../data.js';
+import { capitals } from '../data-source/data';
 
 export function loadCapitalByCountryId(countryId) {
     return new Promise(((resolve, reject) => {

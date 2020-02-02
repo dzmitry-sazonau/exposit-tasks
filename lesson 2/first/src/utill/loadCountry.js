@@ -1,4 +1,4 @@
-import { countries } from '../data.js';
+import { countries } from '../data-source/data';
 
 export function loadCountry(searchCountry) {
     return new Promise(((resolve, reject) => {
