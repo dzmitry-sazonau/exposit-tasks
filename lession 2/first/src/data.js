@@ -1,23 +1,31 @@
 const countries = [
     {
         id: 1,
-        country: 'Belarus'
+        name: 'Belarus'
     },
     {
         id: 2,
-        country: 'Poland'
+        name: 'Poland'
     },
     {
         id: 3,
-        country: 'Russia'
+        name: 'Russia'
     },
     {
         id: 4,
-        country: 'Ukraine'
+        name: 'Ukraine'
+    },
+    {
+        id: 6,
+        name: 'UUUU'
     },
     {
         id: 5,
-        country: 'Canada'
+        name: 'Canada'
+    },
+    {
+        id: 5,
+        name: 'C'
     }
 ];
 
@@ -46,6 +54,11 @@ const capitals = [
         id: 5,
         name: 'Kiev',
         countryId: 4
+    },
+    {
+        id: 6,
+        name: 'Ottawa',
+        countryId: 7
     }
 ];
 

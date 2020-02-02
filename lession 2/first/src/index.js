@@ -1,10 +1,13 @@
-import { loadCapitalByCountryId } from './loadCapitalByCountryId.js';
-import { loadCountry } from './loadCountry.js';
-
-async function getCapitalByCountry({countryId, countryName}) {
-    const country = await loadCountry({id: countryId, name: countryName})
-    return await loadCapitalByCountryId(country.id)
-}
+import { getCapitalByCountry } from './getCapitalByCountry';
 
 getCapitalByCountry({countryId: 5, countryName: ''})
-    .then(capitalName => console.log(capitalName));
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
+
+getCapitalByCountry({countryId: 0, countryName: 'c'})
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
+
+getCapitalByCountry({countryId: {}, countryName: ''})
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
