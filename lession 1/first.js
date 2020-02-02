@@ -7,8 +7,8 @@ const source = [
     [],
     "",
     "fdfdfsff",
-    { name: 'Pavel', age: {}},
-    { name: 'Anna', age: {}}
+    { name: 'Pavel', age: { new: 11}},
+    { name: 'Anna', age: { new: 11}}
 ];
 const emptyObject = {};
 
@@ -45,11 +45,16 @@ function getSlicedValuesFour(source, checkParam) {
 }
 
 function checkParam(object, param) {
-    return object && object.hasOwnProperty(param) && (checkEmptyObject(object[param]) ? emptyObject : object[param])
+    return object && object.hasOwnProperty(param) && (checkEmptyObject(object[param]) ? JSON.stringify(object[param]) : object[param])
+}
+
+// !!!!!!!!
+function areObjectsEqual (objA, objB) {
+    return JSON.stringify(objA) === JSON.stringify(objB)
 }
 
 function checkEmptyObject(object) {
-    return object !== null && typeof(object) === 'object' && Object.keys(object).length === 0
+    return object !== null && typeof(object) === 'object'
 }
 
 console.log(getSlicedValuesFour(source, checkParam));

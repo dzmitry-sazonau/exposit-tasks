@@ -34,7 +34,7 @@ function heatCalculatorOne(initialTemp) {
     let oldTemp = initialTemp;
 
     if (oldTemp <= -273) {
-        console.log('Temperature limit reached')
+        return () => { console.log('Temperature limit reached') }
     } else {
         return function (deltaTemp) {
             let newTemp = oldTemp + deltaTemp;
@@ -77,6 +77,7 @@ function heatCalculatorTwo(initialTemp, material) {
     }
 }
 
+// !!!!!! Too complicated
 function calculatorForHeat(oldTemp, newTemp, deltaTemp, material) {
     let heat = 0;
 
@@ -104,18 +105,28 @@ function calculatorForHeat(oldTemp, newTemp, deltaTemp, material) {
     console.log({ oldTemp, newTemp, heat });
 }
 
-const calculator = heatCalculatorOne(0);
+const calculator = heatCalculatorOne(-100);
 
-calculator(20);
-calculator(-10);
+// !!!!!! error protection
+calculator({})
+// calculator('AAA')
+
+// const calculator2 = heatCalculatorOne(-300);
+// calculator2(200)
+
+// !!!!!! Heat consuming/excretion should be the same in both directions
+// calculator(400);
+// calculator(-400);
 
 const ironCalculator = heatCalculatorTwo(50, 'iron');
-const waterCalculattor = heatCalculatorTwo(0, 'water');
+const waterCalculator = heatCalculatorTwo(0, 'water');
 const goldCalculator = heatCalculatorTwo(0, 'gold');
 const errorCalculator = heatCalculatorTwo(0, 'op');
 
 ironCalculator(-30);
-ironCalculator(30);
-waterCalculattor(10);
+ironCalculator(15);
+waterCalculator(10);
 goldCalculator(1000);
 errorCalculator(10);
+ironCalculator(15);
+errorCalculator(-500);

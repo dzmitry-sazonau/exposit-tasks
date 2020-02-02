@@ -2,28 +2,34 @@ const probability = 0.05;
 const countries = [
     {
         id: 1,
-        country: 'Belarus'
+        name: 'Belarus'
     },
     {
         id: 2,
-        country: 'Poland'
+        name: 'Poland'
     },
     {
         id: 3,
-        country: 'Russia'
+        name: 'Russia'
     },
     {
         id: 4,
-        country: 'Ukraine'
-    },
-    {
-        id: 5,
-        country: 'Canada'
+        name: 'Ukraine'
     },
     {
         id: 6,
-        country: 'Canada'
-    }];
+        name: 'UUUU'
+    },
+    {
+        id: 5,
+        name: 'Canada'
+    },
+    {
+        id: 6,
+        name: 'UUUU'
+    }
+];
+
 const capitals = [
     {
         id: 1,
@@ -49,45 +55,67 @@ const capitals = [
         id: 5,
         name: 'Kiev',
         countryId: 4
+    },
+    {
+        id: 6,
+        name: 'Ottawa',
+        countryId: 7
     }
 ];
 
 function loadCountryById(id) {
     return new Promise(((resolve, reject) => {
-        const country = countries.find(element => !!element.id && element.id === id);
-
-        if (Math.random() < probability) {
-            reject('Could not retrieve the data');
-        }
-        if (country) {
-            setTimeout(resolve(country), 3000);
-        } else {
-            reject('Country not found');
-        }
+        setTimeout(() => {
+            const country = countries.find(element => !!element.id && element.id === id);
+            if (Math.random() < probability) {
+                reject('Could not retrieve the data');
+            }
+            if (country) {
+                resolve(country);
+            } else {
+                reject('Country not found');
+            }
+        }, 3000);
     }));
 }
 
-function loadCountry({id, name}) {
+function loadCountry(searchCountry) {
     return new Promise(((resolve, reject) => {
-        const country = (id || name) && countries.find(element => (!!element.id && element.id === id) || (!!element.name && element.name === name));
+        setTimeout(() => {
+            const country = countries
+                .filter(country => fd(country, searchCountry, 'id'))
+                .find(country => fd(country, searchCountry, 'name'));
 
-        if (country) {
-            setTimeout(resolve(country), 3000);
-        } else {
-            reject('Country not found');
-        }
+            if (country) {
+                resolve(country);
+            } else {
+                reject('Country not found');
+            }
+        }, 3000);
     }));
+}
+
+function findCountry(country, searchCountry, param) {
+    if ( !(param in searchCountry && searchCountry[param]) ) {
+        return 1
+    } else if (country[param] === searchCountry[param]) {
+        return 1
+    } else {
+        return 0
+    }
 }
 
 function loadCapitalByCountryId(countryId) {
     return new Promise(((resolve, reject) => {
-        const capital = countryId && capitals.find(element => !!element.id && element.countryId === countryId)
+        setTimeout(() => {
+            const capital = countryId && capitals.find(element => !!element.id && element.countryId === countryId)
 
-        if (capital) {
-            resolve(capital.name)
-        } else {
-            reject('Capital not found');
-        }
+            if (capital) {
+                resolve(capital.name)
+            } else {
+                reject('Capital not found');
+            }
+        }, 3000);
     }));
 }
 
@@ -97,14 +125,43 @@ function getCapitalByCountry({countryId, countryName}) {
 }
 
 loadCountryById(2)
-    .then(country => console.log(country));
+    .then(country => console.log(country))
+    .catch(error => console.log(error));
+
+loadCountryById(222)
+    .then(country => console.log(country))
+    .catch(error => console.log(error));
 
 loadCountry({id: 1, name: ''})
-    .then(country => console.log(country));
+    .then(country => console.log(country))
+    .catch(error => console.log(error));
+
+loadCountry({id: 1, name: ''})
+    .then(country => console.log(country))
+    .catch(error => console.log(error));
+
+loadCountry({id: 6, name: 'UUUU'})
+    .then(country => console.log(country))
+    .catch(error => console.log(error));
+
+loadCountry({id: 1, name: ''})
+    .then(country => console.log(country))
+    .catch(error => console.log(error));
 
 loadCapitalByCountryId(2)
-    .then(capitalName => console.log(capitalName));
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
 
 getCapitalByCountry({countryId: 5, countryName: ''})
-    .then(capitalName => console.log(capitalName));
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
+
+getCapitalByCountry({countryId: 0, countryName: 'c'})
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
+
+getCapitalByCountry({countryId: {}, countryName: ''})
+    .then(capitalName => console.log(capitalName))
+    .catch(error => console.log(error));
+
 
