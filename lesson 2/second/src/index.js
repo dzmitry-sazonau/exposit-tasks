@@ -1,9 +1,12 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
 const company = {
     headDepartment: {
         director: 'Vasya',
-        salary: 100500
+        salary: 100500,
+        newDirector: {
+            director: 'new'
+        }
     },
     devDepartment: {
         branches: {
@@ -20,7 +23,6 @@ const company = {
                 salary: 500
             },
             director2: {
-                director: 'Kolya',
                 salary: 500
             }
         },
@@ -36,32 +38,26 @@ const company = {
 };
 const newCompany = {};
 const paths = [];
-const searchValue = 'director';
 
-let path = '';
+function passageOfTheObject(object, searchValue) {
+    walkThrough(object, '');
 
-// pass searchValue as 2nd parameter
-function passageOfTheObject(object) {
-    walkthrough(object);
-
-    //pass path as 2nd parameter
-    function walkthrough(object) {
-        for (let key in object) {
-            path += key + '.';
-
-            if (typeof (object[key]) === 'object' && key !== searchValue) {
-                walkthrough(object[key]);
-                // path = ''
-            } else if (key === searchValue) {
-                paths.push(path.slice(0, path.length - 1))
+    function walkThrough(object, path) {
+        Object.keys(object).forEach(element => {
+            if (typeof object[element] === "object" && element !== searchValue){
+                path += `${element}.`;
+                walkThrough(object[element], path);
+                path = path.slice(0, path.lastIndexOf(element));
             }
-        }
+            if (element === searchValue) {
+                paths.push(path + searchValue);
+            }
+        });
     }
 }
 
-passageOfTheObject(company);
-
-paths.forEach(element => _.set(newCompany, element, _.get(company, element)));
+passageOfTheObject(company, 'director');
+paths.forEach(path => _.set(newCompany, path, _.get(company, path)));
  
 console.log(paths);
 console.log(newCompany);
