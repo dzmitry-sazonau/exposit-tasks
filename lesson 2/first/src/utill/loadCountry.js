@@ -1,4 +1,4 @@
-import { countries } from '../data-source/data';
+import { countries, probability } from '../data-source/data';
 
 export function loadCountry(searchCountry) {
     return new Promise(((resolve, reject) => {
@@ -7,6 +7,9 @@ export function loadCountry(searchCountry) {
                 .filter(country => findCountry(country, searchCountry, 'id'))
                 .find(country => findCountry(country, searchCountry, 'name'));
 
+            if (Math.random() < probability) {
+                reject('Could not retrieve the data');
+            }
             if (country) {
                 resolve(country);
             } else {
@@ -17,11 +20,10 @@ export function loadCountry(searchCountry) {
 }
 
 function findCountry(country, searchCountry, param) {
-    if ( !(param in searchCountry && searchCountry[param]) ) {
-        return 1
-    } else if (country[param] === searchCountry[param]) {
-        return 1
-    } else {
-        return 0
-    }
+    const typeOfParam = param === 'id' ? 'number' : 'string';
+    return(
+        param in searchCountry &&
+        typeof searchCountry[param] === typeOfParam &&
+        country[param] === searchCountry[param]
+    )
 }

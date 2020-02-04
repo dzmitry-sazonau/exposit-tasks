@@ -63,10 +63,18 @@ const capitals = [
         id: 6,
         name: 'Ottawa',
         countryId: 7
+    },
+    {
+        id: 888,
+        name: 'CapitalUUUU',
+        countryId: 6
     }
 ];
 
+const probability = 0.05;
+
 export {
     countries,
-    capitals
+    capitals,
+    probability
 }
