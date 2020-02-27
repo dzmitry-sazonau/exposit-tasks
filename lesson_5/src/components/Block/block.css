@@ -1,0 +1,12 @@
+.chess-cell {
+    height: 50px;
+    width: 50px;
+}
+
+.row:nth-child(odd) .chess-cell:nth-child(even) {
+    background-color: white;
+}
+
+.row:nth-child(even) .chess-cell:nth-child(odd) {
+    background-color: white;
+}
