@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+}
+
+.board {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #D7C386;
+}
+
+.numbers {
+    height: 402px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    padding: 18px 0px;
+    background-color: #832828;
+}
+
+.number {
+    width: 20px;
+    text-align: center;
+}
+
+.letters {
+    display: flex;
+    justify-content: space-around;
+    background-color: #832828;
+}
+
+.chessboard {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #BE6537;
+    border: 1px solid black;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.block {
+    width: 50px;
+    height: 50px;
+}
+
+.step {
+    background-color: #76E958 !important;
+}
+
+.animated-hourse {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-image: url('../image/horse.png') !important; 
+    background-size: contain !important;
+    pointer-events: none;
+    transition: all 0.5s linear;
+}
+
+.error {
+    background-color: #FB0000 !important;
+}
+
+.chessboard .wrapper:nth-child(odd) .block:nth-child(odd) {
+    background: #FDD8B0;
+}
+
+.chessboard .wrapper:nth-child(even) .block:nth-child(even) {
+    background: #FDD8B0;
+}
