@@ -1,11 +1,9 @@
 import React from 'react';
-import { Desk } from "./components/Desk";
+import { Desk } from "./components/desk";
 
 function App() {
     return (
-        <div>
-            <Desk />
-        </div>
+        <Desk />
     );
 }
 
